@@ -1,55 +1,29 @@
-provider "aws" {
-  region = "us-east-1"
-  profile = "chris"
+module "vpc" {
+  source = "../../modules/vpc"
+
+  environment_name = "Staging"
+  vpc_cidr = "172.16.0.0/16"
+  public_1a_cidr = "172.16.0.0/24"
+  public_1b_cidr = "172.16.1.0/24"
+  public_1c_cidr = "172.16.2.0/24"
 }
 
-resource "aws_vpc" "vpc" {
-  cidr_block = "10.0.0.0/18"
-  enable_dns_hostnames = true
-
-  tags {
-    Name = "Nextcloud ${var.environment_name} VPC"
-  }
+output "vpc_id" {
+  value = "${module.vpc.vpc_id}"
 }
-resource "aws_internet_gateway" "gw" {
-  vpc_id = "${aws_vpc.vpc.id}"
-
-  tags {
-    Name = "Nextcloud ${var.environment_name} VPC"
-  }
+output "public_subnet_1a" {
+  value = "${module.vpc.public_subnet_1a}"
 }
-resource "aws_route" "route" {
-  route_table_id         = "${aws_vpc.vpc.main_route_table_id}"
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.gw.id}"
+output "public_subnet_1b" {
+  value = "${module.vpc.public_subnet_1b}"
 }
-resource "aws_subnet" "public-1a" {
-  vpc_id = "${aws_vpc.vpc.id}"
-  availability_zone = "us-east-1a"
-  cidr_block = "10.0.0.0/24"
-  map_public_ip_on_launch = true
-
-  tags {
-    Name = "Nextcloud ${var.environment_name} VPC"
-  }
+output "public_subnet_1c" {
+  value = "${module.vpc.public_subnet_1c}"
 }
-resource "aws_subnet" "public-1b" {
-  vpc_id = "${aws_vpc.vpc.id}"
-  availability_zone = "us-east-1b"
-  cidr_block = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-
-  tags {
-    Name = "Nextcloud ${var.environment_name} VPC"
-  }
-}
-resource "aws_subnet" "public-1c" {
-  vpc_id = "${aws_vpc.vpc.id}"
-  availability_zone = "us-east-1c"
-  cidr_block = "10.0.2.0/24"
-  map_public_ip_on_launch = true
-
-  tags {
-    Name = "Nextcloud ${var.environment_name} VPC"
-  }
+output "public_subnet_ids" {
+  value = [
+    "${module.vpc.public_subnet_1a}",
+    "${module.vpc.public_subnet_1b}",
+    "${module.vpc.public_subnet_1c}"
+  ]
 }
