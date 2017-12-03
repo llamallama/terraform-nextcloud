@@ -8,7 +8,7 @@ data "terraform_remote_state" "vpc" {
   }
 }
 module "frontend" {
-  source = "../../../modules/nextcloud-app"
+  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.1"
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
   subnet_id = "${data.terraform_remote_state.vpc.public_subnet_1a}"
 

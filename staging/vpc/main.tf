@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "../../modules/vpc"
+  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.1"
 
   environment_name = "Staging"
   vpc_cidr = "172.16.0.0/16"
