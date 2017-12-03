@@ -3,8 +3,12 @@ provider "aws" {
  profile = "chris"
 }
 
+
 resource "aws_security_group" "nextcloud" {
   name = "nextcloud-security-group"
+
+  vpc_id = "${var.vpc_id}"
+
   ingress {
     from_port = 80
     to_port = 80
@@ -51,6 +55,7 @@ resource "aws_instance" "nextcloud" {
   user_data = "${data.template_file.user_data.rendered}"
   key_name = "${var.key_name}"
   vpc_security_group_ids = ["${aws_security_group.nextcloud.id}"]
+  subnet_id = "${var.subnet_id}"
 
   tags {
     Name = "NextCloud"
