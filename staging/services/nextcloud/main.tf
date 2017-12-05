@@ -1,3 +1,8 @@
+provider "aws" {
+ region = "us-east-1"
+ profile = "chris"
+}
+
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config {
@@ -8,7 +13,7 @@ data "terraform_remote_state" "vpc" {
   }
 }
 module "frontend" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.1"
+  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.2"
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
   subnet_id = "${data.terraform_remote_state.vpc.public_subnet_1a}"
 

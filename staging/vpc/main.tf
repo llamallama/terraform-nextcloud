@@ -1,5 +1,10 @@
+provider "aws" {
+  region = "us-east-1"
+  profile = "chris"
+}
+
 module "vpc" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.1"
+  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.2"
 
   environment_name = "Staging"
   vpc_cidr = "172.16.0.0/16"
