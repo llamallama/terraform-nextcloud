@@ -4,7 +4,8 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.2"
+  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.3"
+  #source = "../../../terraform-modules/vpc"
 
   environment_name = "Staging"
   vpc_cidr = "172.16.0.0/16"
@@ -15,6 +16,9 @@ module "vpc" {
 
 output "vpc_id" {
   value = "${module.vpc.vpc_id}"
+}
+output "default_security_group_id" {
+  value = "${module.vpc.default_security_group_id}"
 }
 output "public_subnet_1a" {
   value = "${module.vpc.public_subnet_1a}"
