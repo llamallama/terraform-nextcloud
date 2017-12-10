@@ -26,7 +26,7 @@ module "db" {
   storage_encrypted = false
 
   # kms_key_id        = "arm:aws:kms:<region>:<accound id>:key/<kms key id>"
-  name     = "nextcloudstagingdb"
+  name     = "nextcloud"
   username = "nextcloud"
   password = "changeme"
   port     = "3306"
