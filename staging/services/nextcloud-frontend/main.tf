@@ -23,6 +23,16 @@ data "terraform_remote_state" "iam" {
   }
 }
 
+data "terraform_remote_state" "nextcloud-backend" {
+  backend = "s3"
+  config {
+    profile = "chris"
+    region = "us-east-1"
+    bucket = "chris-terraform-states"
+    key = "nextcloud/staging/services/nextcloud-backend/terraform.tfstate"
+  }
+}
+
 module "frontend" {
   #source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.3"
   source = "../../../../terraform-modules/nextcloud-app"
@@ -33,4 +43,10 @@ module "frontend" {
 
   nextcloud_url = "https://download.nextcloud.com/server/releases/nextcloud-12.0.3.tar.bz2"
   domain_name = "test.pipetogrep.org"
+}
+
+resource "aws_lb_target_group_attachment" "nextcloud-tg-attachment" {
+  target_group_arn = "${data.terraform_remote_state.nextcloud-backend.tg_arn}"
+  target_id        = "${module.frontend.instance_id}"
+  port             = 80
 }
