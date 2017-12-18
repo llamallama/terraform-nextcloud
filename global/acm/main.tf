@@ -3,7 +3,13 @@ provider "aws" {
  profile = "chris"
 }
 
-module "acm" {
+module "acm_prod" {
+  source = "../../../terraform-modules/acm"
+
+  domain_name = "cloud.pipetogrep.org"
+}
+
+module "acm_staging" {
   source = "../../../terraform-modules/acm"
 
   domain_name = "cloud.pipetogrep.org"
