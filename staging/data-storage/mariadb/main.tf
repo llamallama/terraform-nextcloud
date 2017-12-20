@@ -15,7 +15,7 @@ data "terraform_remote_state" "vpc" {
 
 module "db" {
   #source = "../../../../terraform-modules/mariadb"
-  source = "git::git@github.com:llamallama/terraform-modules.git//mariadb?ref=v0.0.4"
+  source = "git::git@github.com:llamallama/terraform-modules.git//mariadb?ref=v0.0.6"
 
   identifier = "nextcloudstagingdb"
 

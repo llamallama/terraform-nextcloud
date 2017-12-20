@@ -4,7 +4,8 @@ provider "aws" {
 }
 
 module "acm_prod" {
-  source = "../../../terraform-modules/acm"
+  source = "git::git@github.com:llamallama/terraform-modules.git//acm?ref=v0.0.6"
+  #source = "../../../terraform-modules/acm"
 
   domain_name = "cloud.pipetogrep.org"
 }
