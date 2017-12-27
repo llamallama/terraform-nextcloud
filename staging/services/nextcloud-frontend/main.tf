@@ -19,7 +19,7 @@ data "terraform_remote_state" "iam" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/staging/iam/terraform.tfstate"
+    key = "nextcloud/global/iam/terraform.tfstate"
   }
 }
 
