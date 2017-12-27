@@ -36,7 +36,7 @@ module "db" {
   backup_window      = "03:00-06:00"
 
   # disable backups to create DB faster
-  backup_retention_period = 5
+  backup_retention_period = 0
 
   tags = {
     Owner       = "Chris"
