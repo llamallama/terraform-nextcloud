@@ -33,6 +33,16 @@ data "terraform_remote_state" "nextcloud-backend" {
   }
 }
 
+data "terraform_remote_state" "s3" {
+  backend = "s3"
+  config {
+    profile = "chris"
+    region = "us-east-1"
+    bucket = "chris-terraform-states"
+    key = "nextcloud/staging/services/nextcloud-backend/terraform.tfstate"
+  }
+}
+
 module "frontend" {
   count_num = "${var.count_num}"
   #source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.6"
@@ -40,7 +50,7 @@ module "frontend" {
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
   subnet_ids = "${data.terraform_remote_state.vpc.public_subnet_ids}"
   security_groups = "${data.terraform_remote_state.vpc.default_security_group_id}"
-  iam_instance_profile = "${data.terraform_remote_state.iam.iam_instance_profile}"
+  iam_instance_profile = "${data.terraform_remote_state.iam.staging_iam_instance_profile}"
 
   nextcloud_url = "${var.nextcloud_url}"
   domain_name = "${var.domain_name}"
