@@ -54,14 +54,16 @@ data "terraform_remote_state" "efs" {
 }
 
 module "frontend" {
-  count_num = "${var.count_num}"
-  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.8"
+  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.9"
   #source = "../../../../terraform-modules/nextcloud-app"
+  count_num = "${var.count_num}"
+  ami = "ami-ace3acd6"
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
   subnet_ids = "${data.terraform_remote_state.vpc.public_subnet_ids}"
   security_groups = "${data.terraform_remote_state.vpc.default_security_group_id}"
   iam_instance_profile = "${data.terraform_remote_state.iam.staging_iam_instance_profile}"
   efs_mount_target = "${data.terraform_remote_state.efs.dns_name}"
+  environment = "${var.environment}"
 
   nextcloud_url = "${var.nextcloud_url}"
   domain_name = "${var.domain_name}"

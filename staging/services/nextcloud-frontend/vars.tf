@@ -5,8 +5,11 @@ variable "domain_name" {
   default = "staging-cloud.piptogrep.org"
 }
 variable "access_ip" {
-  default = "142.196.165.134/32"
+  default = "0.0.0.0/0"
 }
 variable "count_num" {
   default = "1"
+}
+variable "environment" {
+  default = "staging"
 }
