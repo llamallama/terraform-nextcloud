@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.6"
+  source = "git::git@github.com:llamallama/terraform-modules.git//vpc?ref=v0.0.8"
   #source = "../../../terraform-modules/vpc"
 
   environment_name = "Staging"

@@ -14,8 +14,8 @@ data "terraform_remote_state" "vpc" {
 }
 
 module "efs" {
-  source = "../../../../terraform-modules/efs"
-  #source = "git::git@github.com:llamallama/terraform-modules.git//efs?ref=v0.0.8"
+  #source = "../../../../terraform-modules/efs"
+  source = "git::git@github.com:llamallama/terraform-modules.git//efs?ref=v0.0.8"
   creation_token = "nextcloud_staging"
   name = "nextcloud_staging"
   num_mount_targets = 3

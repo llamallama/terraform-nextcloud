@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "staging_ec2_role" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role?ref=v0.0.6"
+  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role?ref=v0.0.8"
   #source = "../../../terraform-modules/iam/role"
   effect = "Allow"
   name = "NextcloudStagingEc2Role"
@@ -12,7 +12,7 @@ module "staging_ec2_role" {
 }
 
 module "staging_ec2_role_policy" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role-policy?ref=v0.0.6"
+  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role-policy?ref=v0.0.8"
   #source = "../../../terraform-modules/iam/role-policy"
   name = "NextcloudStagingEc2RolePolicy"
   role = "${module.staging_ec2_role.id}"
@@ -66,7 +66,7 @@ EOF
 }
 
 module "prod_ec2_role" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role?ref=v0.0.6"
+  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role?ref=v0.0.8"
   #source = "../../../terraform-modules/iam/role"
   effect = "Allow"
   name = "NextcloudProdEc2Role"
@@ -74,7 +74,7 @@ module "prod_ec2_role" {
 }
 
 module "prod_ec2_role_policy" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role-policy?ref=v0.0.6"
+  source = "git::git@github.com:llamallama/terraform-modules.git//iam//role-policy?ref=v0.0.8"
   #source = "../../../terraform-modules/iam/role-policy"
   name = "NextcloudProdEc2RolePolicy"
   role = "${module.prod_ec2_role.id}"

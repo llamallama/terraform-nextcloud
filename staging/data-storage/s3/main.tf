@@ -5,7 +5,7 @@ provider "aws" {
 
 module "s3" {
   #source = "../../../../terraform-modules/s3"
-  source = "git::git@github.com:llamallama/terraform-modules.git//s3?ref=v0.0.7"
+  source = "git::git@github.com:llamallama/terraform-modules.git//s3?ref=v0.0.8"
 
   bucket = "staging-cloud.pipetogrep.org"
   name = "Nextcloud Staging"
