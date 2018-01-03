@@ -9,7 +9,7 @@ data "terraform_remote_state" "vpc" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/staging/vpc/terraform.tfstate"
+    key = "nextcloud/${var.environment}/vpc/terraform.tfstate"
   }
 }
 
@@ -19,7 +19,7 @@ data "terraform_remote_state" "iam" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/global/iam/terraform.tfstate"
+    key = "nextcloud/${var.environment}/iam/terraform.tfstate"
   }
 }
 
@@ -29,17 +29,7 @@ data "terraform_remote_state" "nextcloud-backend" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/staging/services/nextcloud-backend/terraform.tfstate"
-  }
-}
-
-data "terraform_remote_state" "s3" {
-  backend = "s3"
-  config {
-    profile = "chris"
-    region = "us-east-1"
-    bucket = "chris-terraform-states"
-    key = "nextcloud/staging/services/nextcloud-backend/terraform.tfstate"
+    key = "nextcloud/${var.environment}/services/nextcloud-backend/terraform.tfstate"
   }
 }
 
@@ -49,21 +39,32 @@ data "terraform_remote_state" "efs" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/staging/data-storage/efs/terraform.tfstate"
+    key = "nextcloud/${var.environment}/data-storage/efs/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "s3" {
+  backend = "s3"
+  config {
+    profile = "chris"
+    region = "us-east-1"
+    bucket = "chris-terraform-states"
+    key = "nextcloud/global/data-storage/s3/terraform.tfstate"
   }
 }
 
 module "frontend" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.0.9"
+  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.1.0"
   #source = "../../../../terraform-modules/nextcloud-app"
+  environment = "${var.environment}"
   count_num = "${var.count_num}"
-  ami = "ami-ace3acd6"
+  ami = "${var.ami}"
   vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
   subnet_ids = "${data.terraform_remote_state.vpc.public_subnet_ids}"
   security_groups = "${data.terraform_remote_state.vpc.default_security_group_id}"
-  iam_instance_profile = "${data.terraform_remote_state.iam.staging_iam_instance_profile}"
+  iam_instance_profile = "${data.terraform_remote_state.iam.iam_instance_profile}"
   efs_mount_target = "${data.terraform_remote_state.efs.dns_name}"
-  environment = "${var.environment}"
+  config_bucket = "${data.terraform_remote_state.s3.bucket_name}"
 
   nextcloud_url = "${var.nextcloud_url}"
   domain_name = "${var.domain_name}"

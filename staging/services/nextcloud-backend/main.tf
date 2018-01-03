@@ -9,15 +9,16 @@ data "terraform_remote_state" "vpc" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/staging/vpc/terraform.tfstate"
+    key = "nextcloud/${var.environment}/vpc/terraform.tfstate"
   }
 }
 
 module "lb" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//lb?ref=v0.0.8"
+  source = "git::git@github.com:llamallama/terraform-modules.git//lb?ref=v0.1.0"
   #source = "../../../../terraform-modules/lb"
 
-  lb_name = "NextcloudStaging"
+  environment = "${var.environment}"
+  lb_name = "Nextcloud${var.environment}"
   use_tls = 1
   certificate_arn = "arn:aws:acm:us-east-1:887110813782:certificate/8906e621-ee45-40b6-9ba7-7e31017d80ce"
   subnets = ["${data.terraform_remote_state.vpc.public_subnet_ids}"]

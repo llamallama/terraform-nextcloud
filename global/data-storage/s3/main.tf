@@ -4,10 +4,10 @@ provider "aws" {
 }
 
 module "s3" {
-  #source = "../../../../terraform-modules/s3"
+  #source = "../../../terraform-modules/s3"
   source = "git::git@github.com:llamallama/terraform-modules.git//s3?ref=v0.1.0"
 
-  bucket = "${var.environment}-nextcloud-bucket-chris"
-  name = "Nextcloud ${var.environment}"
+  bucket = "nextcloud-config-chris"
+  name = "Nextcloud Configs"
   environment = "${var.environment}"
 }

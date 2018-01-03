@@ -9,15 +9,15 @@ data "terraform_remote_state" "vpc" {
     profile = "chris"
     region = "us-east-1"
     bucket = "chris-terraform-states"
-    key = "nextcloud/staging/vpc/terraform.tfstate"
+    key = "nextcloud/${var.environment}/vpc/terraform.tfstate"
   }
 }
 
 module "db" {
   #source = "../../../../terraform-modules/mariadb"
-  source = "git::git@github.com:llamallama/terraform-modules.git//mariadb?ref=v0.0.8"
+  source = "git::git@github.com:llamallama/terraform-modules.git//mariadb?ref=v0.1.0"
 
-  identifier = "nextcloudstagingdb"
+  identifier = "nextcloud${var.environment}db"
 
   engine            = "mariadb"
   engine_version    = "10.1.26"
@@ -40,7 +40,7 @@ module "db" {
 
   tags = {
     Owner       = "Chris"
-    Environment = "Staging"
+    Environment = "${var.environment}"
   }
 
   db_subnet_group_name = "nextcloud db subnet group"
