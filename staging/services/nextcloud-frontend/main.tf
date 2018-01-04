@@ -69,6 +69,12 @@ module "frontend" {
   nextcloud_url = "${var.nextcloud_url}"
   domain_name = "${var.domain_name}"
   access_ip = "${var.access_ip}"
+
+  tags = {
+    "Name" = "Nextcloud"
+    "Environment" = "${var.environment}"
+    "scheduler:ec2-startstop" = "default"
+  }
 }
 
 resource "aws_lb_target_group_attachment" "nextcloud-tg-attachment" {
@@ -76,4 +82,8 @@ resource "aws_lb_target_group_attachment" "nextcloud-tg-attachment" {
   target_group_arn = "${data.terraform_remote_state.nextcloud-backend.tg_arn}"
   target_id        = "${module.frontend.instance_id[count.index]}"
   port             = 80
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }

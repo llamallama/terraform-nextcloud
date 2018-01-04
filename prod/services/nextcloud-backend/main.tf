@@ -14,7 +14,7 @@ data "terraform_remote_state" "vpc" {
 }
 
 module "lb" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//lb?ref=v0.1.0"
+  source = "git::git@github.com:llamallama/terraform-modules.git//lb?ref=v0.1.2"
   #source = "../../../../terraform-modules/lb"
 
   environment = "${var.environment}"

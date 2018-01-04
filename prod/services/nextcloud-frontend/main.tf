@@ -54,7 +54,7 @@ data "terraform_remote_state" "s3" {
 }
 
 module "frontend" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.1.1"
+  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.1.3"
   #source = "../../../../terraform-modules/nextcloud-app"
   environment = "${var.environment}"
   count_num = "${var.count_num}"
@@ -69,11 +69,20 @@ module "frontend" {
   nextcloud_url = "${var.nextcloud_url}"
   domain_name = "${var.domain_name}"
   access_ip = "${var.access_ip}"
+  tags = {
+    "Name" = "Nextcloud"
+    "Environment" = "${var.environment}"
+    "scheduler:ec2-startstop" = "default"
+  }
 }
 
 resource "aws_lb_target_group_attachment" "nextcloud-tg-attachment" {
   count = "${var.count_num}"
   target_group_arn = "${data.terraform_remote_state.nextcloud-backend.tg_arn}"
-  target_id        = "${module.frontend.instance_id[count.index]}"
-  port             = 80
+  target_id = "${module.frontend.instance_id[count.index]}"
+  port = 80
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

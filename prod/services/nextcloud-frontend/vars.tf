@@ -1,5 +1,5 @@
 variable "ami" {
-  default = "ami-65e1b61f"
+  default = "ami-4071203a"
 }
 variable "nextcloud_url" {
   default = "https://download.nextcloud.com/server/releases/nextcloud-12.0.4.tar.bz2"
