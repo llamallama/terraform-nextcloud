@@ -7,7 +7,7 @@
   * Manually upload a minimal Nextcloud config.php file
 1. VPC
 1. Environment S3
-1. IAM
+1. Environment IAM
   * Manually create the IAM keys
 1. mariadb
   * Manually change the master password
