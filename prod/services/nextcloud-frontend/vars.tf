@@ -8,7 +8,7 @@ variable "domain_name" {
   default = "prod-cloud.piptogrep.org"
 }
 variable "access_ip" {
-  default = "142.196.165.134/32"
+  default = "98.15.86.230/32"
 }
 variable "count_num" {
   default = "1"
