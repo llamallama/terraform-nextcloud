@@ -69,6 +69,7 @@ module "frontend" {
   nextcloud_url = "${var.nextcloud_url}"
   domain_name = "${var.domain_name}"
   access_ip = "${var.access_ip}"
+
   tags = {
     "Name" = "Nextcloud"
     "Environment" = "${var.environment}"

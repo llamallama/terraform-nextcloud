@@ -54,7 +54,7 @@ data "terraform_remote_state" "s3" {
 }
 
 module "frontend" {
-  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.1.1"
+  source = "git::git@github.com:llamallama/terraform-modules.git//nextcloud-app?ref=v0.1.3"
   #source = "../../../../terraform-modules/nextcloud-app"
   environment = "${var.environment}"
   count_num = "${var.count_num}"
