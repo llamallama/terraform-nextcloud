@@ -43,7 +43,7 @@ module "db" {
     Environment = "${var.environment}"
   }
 
-  db_subnet_group_name = "nextcloud db subnet group"
+  db_subnet_group_name = "nextcloud db subnet group - staging"
   subnet_ids = ["${data.terraform_remote_state.vpc.public_subnet_ids}"]
 
   # DB parameter group
